@@ -7,7 +7,7 @@ export const login = createAsyncThunk(
     try {
       const res = await api.post("/login", data).then((res) => res.data);
       localStorage.setItem("token", res.token);
-      return res;
+      return res.token;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -51,13 +51,13 @@ const userSlice = createSlice({
       });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.token = action.payload;
       state.isLoggedin = true;
     });
   },
 });
 
-
-export const isLoggedin = state => state?.user?.isLoggedin;
+export const isLoggedin = (state) => state?.user?.isLoggedin;
+export const userToken = (state) => state?.user?.token;
 
 export default userSlice.reducer;

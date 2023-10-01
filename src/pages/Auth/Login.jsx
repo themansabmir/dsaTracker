@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isLoggedin, login, } from "../../features/userSlice";
-import { useNavigate } from "react-router-dom";
+import { isLoggedin, login, userToken } from "../../features/userSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const islogin = useSelector(isLoggedin);
+  const token = useSelector(userToken);
 
   const [data, setData] = useState({
     username: "",
@@ -25,9 +26,9 @@ const Login = () => {
 
   useEffect(() => {
     if (islogin) {
-  navigate('/viewall')
-}
-  },[islogin])
+      navigate("/viewall");
+    }
+  }, [islogin]);
 
   return (
     <div className='flex min-h-screen justify-center items-center bg-purple-400'>
@@ -56,7 +57,21 @@ const Login = () => {
           />
         </div>
         <div className='flex flex-col'>
-          <button type='submits'>Login</button>
+          <button
+            type='submits'
+            className='bg-purple-400 my-5 py-1 text-white text-lg uppercase'
+          >
+            Login
+          </button>
+        </div>
+        <div>
+          <p>
+            Coming first Time? How about you{" "}
+            <span className='text-blue-500 '>
+              <Link to={"/signup"}>Sign Up</Link>
+            </span>{" "}
+            first.
+          </p>
         </div>
       </form>
     </div>
